@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+/* 로고 */
+#center {height: 320px; padding: 25px 0px 0px 0px;}
+
+
+#user {width: 600px; height:450px; margin-left: 200px; margin-bottom: 80px; border: 2px solid #bfbfbf;}
+
+#loginForm {margin-top: 65px;}
+
+#loginForm .log {margin: 250px 0px 0px 10px; padding: 10px 50px 10px 50px; border: 2px solid #bfbfbf; border-radius: 2px; font-size: 32px;}
+
+.id{margin-top: 70px;}
+.id>.form-text{margin-right: 22px; font-size: 20px;}
+#input-uid, #input-pass{width: 250px; height: 39px;}
+.pw{margin-top: 30px; margin-bottom:50px;}
+.pw>.form-text{margin-right: 11px; font-size: 20px;}
+
+#btn-submit{width: 150px; height: 35px; color: #0099FF; font-size: 15px;}
+
+/************************** 회원가입폼 **************************/
+
+#joinForm .log {margin: 250px 0px 0px 10px; padding: 10px 50px 10px 50px; border: 2px solid #bfbfbf; border-radius: 2px; font-size: 32px;}
+
+/* 회원가입 폼 박스 */
+#user #joinForm {
+	width: 500px; 
+	margin: 0px auto;
+	padding: 30px 10px 30px 10px;
+}
+
+.form-group>.form-text{margin-right: 22px; font-size: 20px;}
+
+#join-form>.form-group{padding: 12px;}
+
+#join-form>.idBox{padding-top: 47px;}
+
+/* 성별 */
+#user #joinForm .form-group input[type="radio"] { margin-right: 10px;}
+
+/* 회원가입 버튼영역 */
+#user #joinForm .button-area {
+	margin: 25px 0px 0px 0px;
+	text-align: center;
+}
+
+/* 회원가입 버튼 */
+ #user #joinForm .button-area button {
+    width: 100px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+/**************************** 회원가입 성공 ************************/
+
+/* 회원가입 성공 외각라인 */
+#user #joinOK {
+	width: 500px; 
+	height: 200px;
+	border: 0.5px solid #b0b0b0;
+	margin: 0px auto;
+	margin-top: 90px;
+	padding: 60px 10px 0px 10px;
+}
+
+.bold{font-size: 20px;}

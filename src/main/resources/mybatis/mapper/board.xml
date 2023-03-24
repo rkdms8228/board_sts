@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.web.mapper.BoardMapper">
+
+	<!-- 리스트 불러오기 + 검색 -->
+	<select id="getList" resultType="hashmap" parameterType="hashmap">
+		<![CDATA[
+			select c.board_no boardNo
+				   , c.title
+				   , u.name
+				   , c.hit
+				   , DATE_FORMAT(c.regDate, '%Y-%m-%d %H:%i') regDate
+				   , c.user_no userNo
+			from content c, users u
+			where u.no = c.user_no
+		]]>
+		<if test="keyword != null">
+			and title like concat('%',#{keyword},'%' )
+		</if>
+		<![CDATA[
+			order by board_no desc
+		]]>
+	</select>
+	
+	<!-- 리스트 불러오기 + 페이징 -->
+	<select id="paging" parameterType="String" resultType="map">
+		<![CDATA[
+			select ort.rn
+		           , ort.board_no
+		           , ort.title
+		           , ort.name
+		           , ort.hit
+		           , ort.regDate
+		           , ort.userNo
+			from (select rownum rn
+	                     , ot.board_no
+	                     , ot.title
+	                     , ot.name
+	                     , ot.hit
+	                     , ot.regDate
+	                     , ot.userNo
+		          from (select c.board_no
+	                           , c.title
+	                           , u.name
+	                           , c.hit
+	                           , DATE_FORMAT(c.regDate, '%Y-%m-%d %H:%i') regDate
+	                           , c.user_no userNo
+						from content c, users u
+						where u.no = c.user_no
+						order by c.board_no asc)ot
+					)ort
+			where rn>=#{startRnum}
+			and rn<=#{endRnum}
+		]]>
+	</select>
+	
+	<!-- 전체 글갯수 구하기 -->
+	<select id="selectTotalCnt" resultType="int">
+		<![CDATA[
+			select count(*) count
+			from content c, users u
+			where c.user_no = u.no
+		]]>
+	</select>
+		
+	<!-- 게시판 글쓰기 -->
+	<insert id="write" parameterType="com.web.vo.BoardVo">
+		<![CDATA[
+			insert into content
+			values(0, #{title}, #{content}, 0, now(), #{userNo})
+		]]>
+	</insert>
+	
+	
+	<!-- 게시판 내용 읽기 -->
+	<select id="read" resultType="com.web.vo.BoardVo">
+		<![CDATA[
+			select c.board_no boardNo
+			        , c.title
+			        , u.name
+			        , c.content
+			        , c.hit
+			        , DATE_FORMAT(c.regDate, '%Y-%m-%d %H:%i:%s') regDate
+			        , c.user_no userNo
+			from content c, users u
+			where u.no = c.user_no
+			and c.board_no = #{boardNo}
+		]]>
+	</select>
+	
+	<!-- 게시판 조회수 -->
+	<update id="boardHit" parameterType="int">
+		<![CDATA[
+			update content
+			set hit = hit + 1
+			where board_no = #{boardNo}
+		]]>
+	</update>
+	
+	<!-- 게시판 삭제 -->
+	<delete id="delete" parameterType="int">
+		<![CDATA[
+			delete from content
+			where board_no = #{boardNo}
+		]]>
+	</delete>
+	
+	<!-- 게시판 수정 -->
+	<update id="modify" parameterType="com.web.vo.BoardVo">
+		<![CDATA[
+			update content
+			set title = #{title}
+				, content = #{content}
+				, regDate = now()
+			where board_no = #{boardNo}
+		]]>
+	</update>
+	
+</mapper>
